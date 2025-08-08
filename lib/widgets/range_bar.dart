@@ -111,7 +111,7 @@ class RangeBar extends StatelessWidget {
       );
       labelWidgets.add(
         Positioned(
-          right: -25,
+          right: -27,
           top: height + 8,
           child: SizedBox(
             width: 40,
