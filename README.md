@@ -1,6 +1,6 @@
-# Range Bar Flutter Assignment
+# Neodocs Flutter Assignment - By Prajjwal
 
-A Flutter application that displays a dynamic range bar with multiple sections, built with a focus on code quality, error handling, and maintainability.
+A Flutter application that displays a dynamic range bar with multiple sections
 
 ## Project Overview
 
