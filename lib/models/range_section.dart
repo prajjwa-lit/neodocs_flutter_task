@@ -48,13 +48,11 @@ class RangeSection {
   }
 }
 
-/// Helper to parse '#aabbcc' or 'aabbcc' or '#ffaabbcc' to Color
 Color _parseHexColor(String hex) {
   var cleaned = hex.replaceAll('#', '').trim();
   if (cleaned.length == 6) {
-    cleaned = 'FF$cleaned'; // add full alpha
+    cleaned = 'FF$cleaned'; 
   } else if (cleaned.length == 3) {
-    // short hex like 'f00' => 'FFff0000' (not typical here; optional support)
     final r = cleaned[0] * 2;
     final g = cleaned[1] * 2;
     final b = cleaned[2] * 2;
@@ -62,7 +60,6 @@ Color _parseHexColor(String hex) {
   } else if (cleaned.length == 8) {
     // already ARGB/RGBA depending on format; we'll treat as ARGB
   } else {
-    // fallback
     cleaned = 'FFFF0000';
   }
   return Color(int.parse(cleaned, radix: 16));

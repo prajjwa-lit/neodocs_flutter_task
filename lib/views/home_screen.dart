@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
         child: TextField(
           controller: _textController,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
             labelText: 'Enter numeric value',
             labelStyle: const TextStyle(fontWeight: FontWeight.w500),
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
             errorText: controller.inputError,
             border: InputBorder.none,
             suffixIcon: IconButton(
-              icon: const Icon(Icons.check_circle_outline),
+              icon: const Icon(Icons.arrow_forward_ios_rounded),
               onPressed: () {
                 controller.setValueFromString(_textController.text);
               },

@@ -72,14 +72,20 @@ class RangeController extends ChangeNotifier {
       return;
     }
 
-    final parsed = double.tryParse(s);
+    if (s.contains('.')) {
+      inputError = 'Please enter the number without decimal places';
+      notifyListeners();
+      return;
+    }
+
+    final parsed = int.tryParse(s);
     if (parsed == null) {
       inputError = 'Please enter a valid number';
       notifyListeners();
       return;
     }
 
-    setValue(parsed);
+    setValue(parsed.toDouble());
   }
 
   ValidationResult _validateValue(double value) {
@@ -96,14 +102,14 @@ class RangeController extends ChangeNotifier {
     if (value < minValue) {
       return ValidationResult(
         isValid: false,
-        errorMessage: 'Value must be at least ${minValue.toStringAsFixed(1)}',
+        errorMessage: 'Value must be at least ${minValue.toInt()}',
       );
     }
 
     if (value > maxValue) {
       return ValidationResult(
         isValid: false,
-        errorMessage: 'Value must not exceed ${maxValue.toStringAsFixed(1)}',
+        errorMessage: 'Value must not exceed ${maxValue.toInt()}',
       );
     }
 
