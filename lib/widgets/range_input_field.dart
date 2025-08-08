@@ -27,7 +27,6 @@ class RangeInputField extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Enter numeric value',
             labelStyle: const TextStyle(fontWeight: FontWeight.w500),
-            hintText: 'e.g. 45',
             errorText: errorText,
             border: InputBorder.none,
             suffixIcon: IconButton(

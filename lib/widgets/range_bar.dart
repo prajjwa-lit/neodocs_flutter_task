@@ -81,7 +81,7 @@ class RangeBar extends StatelessWidget {
                   sorted[i].start.toInt().toString(),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 12,
+                    fontSize: 10,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -102,7 +102,7 @@ class RangeBar extends StatelessWidget {
               minStart.toInt().toString(),
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -119,7 +119,7 @@ class RangeBar extends StatelessWidget {
               maxEnd.toInt().toString(),
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -132,8 +132,8 @@ class RangeBar extends StatelessWidget {
       final clampedRelative =
           relative.isFinite ? relative.clamp(0.0, 1.0) : 0.0;
       final markerLeft = clampedRelative * fullWidth;
-      final triangleWidth = 16.0;
-      final triangleHeight = 12.0;
+      final triangleWidth = 25.0;
+      final triangleHeight = 15.0;
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,8 +199,9 @@ class TrianglePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
+      ..strokeWidth = 1.5
       ..color = Colors.black
-      ..style = PaintingStyle.fill;
+      ..style = PaintingStyle.stroke;
 
     final path = Path()
       ..moveTo(size.width / 2, 0)
