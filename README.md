@@ -1,5 +1,4 @@
-# Neodocs Flutter Assignment - By Prajjwal
-
+# Neodocs Flutter Assignment - By Prajjwal 
 A Flutter application that displays a dynamic range bar with multiple sections
 
 ## Project Overview
@@ -147,3 +146,8 @@ Strong focus on clean code practices:
 - Flutter SDK
 - Dart SDK
 - No external state management libraries needed (uses built-in solutions)
+
+
+
+- By Prajjwal Tripathi
+ (mail: prajjwal026@gmail.com)
