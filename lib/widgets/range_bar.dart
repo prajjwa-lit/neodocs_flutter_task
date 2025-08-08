@@ -11,11 +11,11 @@ class RangeBar extends StatelessWidget {
   final double height;
 
   const RangeBar({
-    Key? key,
+    super.key,
     required this.sections,
     required this.value,
     this.height = 48.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,8 @@ class RangeBar extends StatelessWidget {
 
       // Build segments as Widgets with proportional width
       final List<Widget> segmentWidgets = [];
-      for (var s in sorted) {
+      for (var i = 0; i < sorted.length; i++) {
+        final s = sorted[i];
         final segLen = (s.end - s.start).clamp(0.0, double.infinity);
         final segWidth = (segLen / totalSpan) * fullWidth;
 
@@ -45,7 +46,14 @@ class RangeBar extends StatelessWidget {
           width: segWidth,
           height: height,
           alignment: Alignment.center,
-          // Text inside uses contrasting color for readability
+          decoration: BoxDecoration(
+            color: s.color,
+            border: Border(
+              right: i < sorted.length - 1
+                  ? const BorderSide(color: Colors.white24, width: 1)
+                  : BorderSide.none,
+            ),
+          ),
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
@@ -53,10 +61,10 @@ class RangeBar extends StatelessWidget {
               style: TextStyle(
                 color: _bestContrastColor(s.color),
                 fontWeight: FontWeight.w600,
+                fontSize: 14,
               ),
             ),
           ),
-          decoration: BoxDecoration(color: s.color),
         ));
       }
 
@@ -71,51 +79,97 @@ class RangeBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // bar with overlayed marker
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Row(children: segmentWidgets),
-              // vertical marker line
-              Positioned(
-                left: (markerLeft - markerWidth / 2).clamp(0.0, fullWidth - markerWidth),
-                top: -8,
-                child: Container(
-                  width: markerWidth,
-                  height: height + 16,
-                  color: Colors.black,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
                 ),
-              ),
-              // small bubble that shows the value; positioned above the marker
-              Positioned(
-                left: (markerLeft - bubbleWidth / 2).clamp(0.0, fullWidth - bubbleWidth),
-                top: -36,
-                child: Container(
-                  width: bubbleWidth,
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(6),
-                    boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4)],
-                    border: Border.all(color: Colors.black12),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Row(children: segmentWidgets),
+                  // vertical marker line
+                  Positioned(
+                    left: (markerLeft - markerWidth / 2).clamp(0.0, fullWidth - markerWidth),
+                    top: -8,
+                    child: Container(
+                      width: markerWidth,
+                      height: height + 16,
+                      decoration: BoxDecoration(
+                        color: Colors.black87,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 2,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  child: Text(
-                    value.toString(),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  // value bubble
+                  Positioned(
+                    left: (markerLeft - bubbleWidth / 2).clamp(0.0, fullWidth - bubbleWidth),
+                    top: -36,
+                    child: Container(
+                      width: bubbleWidth,
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(6),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                        border: Border.all(color: Colors.black12),
+                      ),
+                      child: Text(
+                        value.toStringAsFixed(1),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
 
-          const SizedBox(height: 8),
-          // Min / Max labels under the bar
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(minStart.toString()),
-              Text(maxEnd.toString()),
-            ],
+          const SizedBox(height: 12),
+          // Min / Max labels
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  minStart.toStringAsFixed(1),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  maxEnd.toStringAsFixed(1),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       );

@@ -25,38 +25,68 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _legend(List<RangeSection> sections) {
-    return Wrap(
-      spacing: 8,
-      runSpacing: 6,
-      children: sections.map((s) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(width: 18, height: 12, color: s.color),
-            const SizedBox(width: 6),
-            Text('${s.meaning} (${s.start.toInt()}-${s.end.toInt()})'),
-          ],
-        );
-      }).toList(),
+    return Card(
+      elevation: 1,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Wrap(
+          spacing: 12,
+          runSpacing: 8,
+          children: sections.map((s) {
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 20,
+                  height: 14,
+                  decoration: BoxDecoration(
+                    color: s.color,
+                    borderRadius: BorderRadius.circular(2),
+                    border: Border.all(
+                      color: Colors.black12,
+                      width: 0.5,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  '${s.meaning} (${s.start.toInt()}-${s.end.toInt()})',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 
   Widget _buildInputField() {
-    return TextField(
-      controller: _textController,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      decoration: InputDecoration(
-        labelText: 'Enter numeric value',
-        hintText: 'e.g. 45',
-        errorText: controller.inputError,
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.check),
-          onPressed: () {
-            controller.setValueFromString(_textController.text);
-          },
+    return Card(
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+        child: TextField(
+          controller: _textController,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          decoration: InputDecoration(
+            labelText: 'Enter numeric value',
+            labelStyle: const TextStyle(fontWeight: FontWeight.w500),
+            hintText: 'e.g. 45',
+            errorText: controller.inputError,
+            border: InputBorder.none,
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.check_circle_outline),
+              onPressed: () {
+                controller.setValueFromString(_textController.text);
+              },
+            ),
+          ),
+          onSubmitted: (v) => controller.setValueFromString(v),
         ),
       ),
-      onSubmitted: (v) => controller.setValueFromString(v),
     );
   }
 
@@ -84,27 +114,42 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final currentRange = controller.getCurrentRange();
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (currentRange != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: Text(
-              'Current Range: $currentRange',
-              style: Theme.of(context).textTheme.titleMedium,
+    return Card(
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (currentRange != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Row(
+                  children: [
+                    const Icon(Icons.info_outline, size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Current Range: $currentRange',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            SizedBox(
+              width: 600,
+              child: RangeBar(
+                sections: controller.sections,
+                value: controller.currentValue,
+              ),
             ),
-          ),
-        SizedBox(
-          width: 600,
-          child: RangeBar(
-            sections: controller.sections,
-            value: controller.currentValue,
-          ),
+            const SizedBox(height: 16),
+            _legend(controller.sections),
+          ],
         ),
-        const SizedBox(height: 12),
-        _legend(controller.sections),
-      ],
+      ),
     );
   }
 
@@ -115,7 +160,12 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, _) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Range Bar Assignment'),
+            backgroundColor: Colors.blueAccent,
+            elevation: 2,
+            title: const Text(
+              'Range Bar Assignment',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
             actions: [
               if (controller.loading || controller.error != null)
                 IconButton(
@@ -133,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: horizontalPadding,
-                    vertical: 16.0,
+                    vertical: 24.0,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

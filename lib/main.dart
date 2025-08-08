@@ -33,7 +33,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final RangeController controller;
-  const MyApp({Key? key, required this.controller}) : super(key: key);
+  const MyApp({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
