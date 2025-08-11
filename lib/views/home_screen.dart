@@ -1,4 +1,3 @@
-// lib/views/home_screen.dart
 import 'package:flutter/material.dart';
 import '../controllers/range_controller.dart';
 import '../widgets/fallback_states.dart';

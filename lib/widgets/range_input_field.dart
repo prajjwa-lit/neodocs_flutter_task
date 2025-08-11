@@ -1,4 +1,3 @@
-// lib/widgets/range_input_field.dart
 import 'package:flutter/material.dart';
 
 class RangeInputField extends StatelessWidget {

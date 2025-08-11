@@ -1,4 +1,3 @@
-// lib/widgets/range_legend.dart
 import 'package:flutter/material.dart';
 import '../models/range_section.dart';
 

@@ -1,4 +1,3 @@
-// lib/models/range_section.dart
 import 'package:flutter/material.dart';
 
 class RangeSection {
@@ -15,7 +14,6 @@ class RangeSection {
   });
 
   factory RangeSection.fromJson(Map<String, dynamic> json) {
-    // Accepts a "range" string like "0-28" or " 0 - 28 "
     double start = 0;
     double end = 0;
 
@@ -26,7 +24,6 @@ class RangeSection {
         start = double.tryParse(parts[0].trim()) ?? 0.0;
         end = double.tryParse(parts[1].trim()) ?? start;
       } else {
-        // If single number provided
         start = double.tryParse(rangeRaw.trim()) ?? 0.0;
         end = start;
       }
@@ -34,7 +31,6 @@ class RangeSection {
       start = rangeRaw.toDouble();
       end = start;
     } else if (rangeRaw is Map) {
-      // In case future data uses { "min":..., "max":... }
       start = (rangeRaw['min'] ?? 0).toDouble();
       end = (rangeRaw['max'] ?? start).toDouble();
     }
@@ -58,7 +54,6 @@ Color _parseHexColor(String hex) {
     final b = cleaned[2] * 2;
     cleaned = 'FF$r$g$b';
   } else if (cleaned.length == 8) {
-    // already ARGB/RGBA depending on format; we'll treat as ARGB
   } else {
     cleaned = 'FFFF0000';
   }

@@ -1,4 +1,3 @@
-// lib/core/app.dart
 import 'package:flutter/material.dart';
 import '../config/api_config.dart';
 import '../controllers/range_controller.dart';

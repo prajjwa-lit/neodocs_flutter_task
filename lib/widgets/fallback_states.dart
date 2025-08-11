@@ -1,4 +1,4 @@
-// lib/widgets/fallback_states.dart
+
 import 'package:flutter/material.dart';
 
 class LoadingState extends StatelessWidget {

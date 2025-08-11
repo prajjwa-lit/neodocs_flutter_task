@@ -1,4 +1,3 @@
-// lib/controllers/range_controller.dart
 import 'package:flutter/material.dart';
 import '../models/range_section.dart';
 import '../services/api_service.dart';
@@ -18,7 +17,6 @@ class ValidationResult {
 class RangeController extends ChangeNotifier {
   final ApiService apiService;
 
-  // state
   List<RangeSection> sections = [];
   bool loading = false;
   String? error;
@@ -29,7 +27,6 @@ class RangeController extends ChangeNotifier {
 
   RangeController({required this.apiService});
 
-  /// Fetch ranges from API and notify listeners for UI updates.
   Future<void> fetchRanges() async {
     loading = true;
     error = null;
@@ -37,7 +34,6 @@ class RangeController extends ChangeNotifier {
 
     try {
       final result = await apiService.fetchRanges();
-      // Sort the sections by start to keep the bar ordered
       result.sort((a, b) => a.start.compareTo(b.start));
       sections = result;
       retryAttempt = 0;
@@ -123,7 +119,6 @@ class RangeController extends ChangeNotifier {
     retryAttempt++;
     notifyListeners();
 
-    // Exponential backoff
     final delay = Duration(seconds: (1 << (retryAttempt - 1)).clamp(1, 30));
     await Future.delayed(delay);
 

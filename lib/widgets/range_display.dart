@@ -1,4 +1,4 @@
-// lib/widgets/range_display.dart
+
 import 'package:flutter/material.dart';
 import '../models/range_section.dart';
 import 'range_bar.dart';

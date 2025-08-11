@@ -1,4 +1,3 @@
-// lib/widgets/range_bar.dart
 import 'package:flutter/material.dart';
 import '../models/range_section.dart';
 import 'dart:math' as math;
@@ -37,16 +36,14 @@ class RangeBar extends StatelessWidget {
       final List<Widget> segmentWidgets = [];
       final List<Widget> labelWidgets = [];
 
-      // Integer span for perfect pixel alignment
+    
       final int totalIntSpan = (maxEnd - minStart).toInt();
 
-      // Compute all segment start positions in pixels (rounded once)
       final List<int> segmentStartsPx = sorted.map((s) {
         final ratio = (s.start - minStart) / totalIntSpan;
         return (ratio * fullWidth).round();
       }).toList();
 
-      // Add fullWidth as the final "end" position for last segment
       segmentStartsPx.add(fullWidth.round());
 
       for (var i = 0; i < sorted.length; i++) {
@@ -68,7 +65,6 @@ class RangeBar extends StatelessWidget {
           ),
         ));
 
-        // Add boundary labels (except for first)
         if (i > 0) {
           final isUp = i % 2 != 0;
           labelWidgets.add(
@@ -91,7 +87,6 @@ class RangeBar extends StatelessWidget {
         }
       }
 
-      // Add labels for min and max
       labelWidgets.add(
         Positioned(
           left: -25,
@@ -127,7 +122,6 @@ class RangeBar extends StatelessWidget {
         ),
       );
 
-      // Compute marker position (clamped)
       final relative = ((value - minStart) / totalSpan);
       final clampedRelative =
           relative.isFinite ? relative.clamp(0.0, 1.0) : 0.0;
@@ -158,7 +152,7 @@ class RangeBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Triangle marker
+  
                 Positioned(
                   left: (markerLeft - triangleWidth / 2)
                       .clamp(0.0, fullWidth - triangleWidth),
@@ -168,7 +162,7 @@ class RangeBar extends StatelessWidget {
                     painter: TrianglePainter(),
                   ),
                 ),
-                // Value text below triangle
+    
                 Positioned(
                   left: (markerLeft - 20)
                       .clamp(0.0, fullWidth - 40),

@@ -1,4 +1,3 @@
-// lib/services/api_service.dart
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
@@ -83,14 +82,12 @@ class ApiService {
             throw ApiException('Failed to parse server response', data: body);
           }
         } else if (response.statusCode >= 500) {
-          // Server errors are retryable
           throw ApiException(
             'Server error occurred',
             statusCode: response.statusCode,
             data: body,
           );
         } else {
-          // Client errors (400s) are not retryable
           throw ApiException(
             _getErrorMessage(response.statusCode, body),
             statusCode: response.statusCode,
@@ -103,7 +100,7 @@ class ApiService {
         if (isRetryable && retryCount < maxRetries) {
           retryCount++;
           await Future.delayed(currentDelay);
-          currentDelay *= 2; // Exponential backoff
+          currentDelay *= 2;
           continue;
         }
         
